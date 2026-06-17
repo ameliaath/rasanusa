@@ -11,7 +11,7 @@
 .btn-export-pdf:hover { opacity:0.88; transform:translateY(-2px); box-shadow:var(--shadow-hover); color:#fff; }
 
 /* Bahan disesuaikan */
-.ingredient-item { padding:5px 2px; border-bottom:1px solid var(--border); }
+.ingredient-item { padding:5px 2px; border-bottom:1px solid var(--border); word-wrap:break-word; overflow-wrap:break-word; }
 .ingredient-item:last-child { border-bottom:none; }
 .ingredient-item.ing-modified {
   background:rgba(5,150,105,.07);
@@ -19,22 +19,29 @@
   padding-left:10px;
   border-radius:0 8px 8px 0;
   margin:2px 0;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 6px;
+  row-gap:2px;
 }
 .ing-mod-badge {
   display:inline-block;
   background:#059669; color:#fff;
   font-size:.68rem; font-weight:800;
   padding:1px 7px; border-radius:20px;
-  margin-right:5px; vertical-align:middle;
   letter-spacing:.3px;
+  flex-shrink:0;
 }
 .ing-note {
   font-size:.78rem; color:#059669;
-  font-weight:600; margin-left:4px;
+  font-weight:600;
+  word-break:break-word;
 }
 .ing-original {
   font-size:.75rem; color:var(--text-muted);
-  text-decoration:line-through; margin-left:6px;
+  text-decoration:line-through;
+  word-break:break-word;
 }
 /* Tombol Atur Preferensi Rasa */
 .btn-atur-rasa {
