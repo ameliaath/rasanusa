@@ -1,0 +1,174 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Admin Dashboard – RasaNusa{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block extra_head %}
+<style>
+.stat-card  { background:var(--surface); border:1px solid var(--border); border-radius:1.2rem;
+              padding:1.5rem; text-align:center; box-shadow:var(--shadow); }
+.stat-num   { font-size:2.4rem; font-weight:900; color:var(--accent); }
+.stat-label { font-size:.83rem; color:var(--text-muted); margin-top:4px; font-weight:600; }
+
+.adm-table   { width:100%; border-collapse:collapse; font-size:.88rem; }
+.adm-table th{ background:var(--accent); color:#fff; padding:10px 14px;
+               text-align:left; font-weight:600; white-space:nowrap; }
+.adm-table td{ padding:9px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.adm-table tr:hover td { background:var(--surface-2); }
+.adm-table tr:last-child td { border-bottom:none; }
+
+.btn-adm  { padding:5px 12px; border-radius:8px; font-size:.8rem; font-weight:700;
+            border:none; cursor:pointer; text-decoration:none;
+            display:inline-flex; align-items:center; gap:4px; transition:.15s; }
+.btn-edit { background:#dbeafe; color:#1d4ed8; }
+.btn-edit:hover { background:#1d4ed8; color:#fff; }
+.btn-del  { background:#fee2e2; color:#dc2626; }
+.btn-del:hover  { background:#dc2626; color:#fff; }
+
+.filter-bar { background:var(--surface-2); border:1px solid var(--border);
+              border-radius:12px; padding:12px 16px; margin-bottom:1rem; }
+.filter-input {
+  padding:8px 12px; border:1.5px solid var(--border); border-radius:8px;
+  background:var(--surface); color:var(--text-primary); font-size:.88rem;
+  outline:none; transition:border-color .2s;
+}
+.filter-input:focus { border-color:var(--accent); }
+.pg-btn { padding:5px 12px; border-radius:8px; border:1px solid var(--border);
+          background:var(--surface); color:var(--text-primary); text-decoration:none;
+          font-size:.82rem; font-weight:600; transition:.15s; }
+.pg-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.pg-btn:hover:not(.active) { background:var(--surface-2); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 px-4" style="max-width:1100px">
+
+  <!-- Stat cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="stat-card">
+        <div class="stat-num">{{ total }}</div>
+        <div class="stat-label">Total Resep</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card">
+        <div class="stat-num">{{ cats|length }}</div>
+        <div class="stat-label">Kategori</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header + tombol tambah -->
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0" style="color:var(--text-primary)">📋 Semua Resep</h5>
+    <a href="{{ url_for('admin.add_recipe', back_q=q, back_cat=cat, back_page=page) }}"
+       style="background:var(--accent);color:#fff;padding:9px 20px;border-radius:50px;
+              font-weight:700;text-decoration:none;font-size:.9rem">
+      <i class="bi bi-plus-lg"></i> Tambah Resep
+    </a>
+  </div>
+
+  <!-- Filter -->
+  <form method="GET" class="filter-bar d-flex flex-wrap gap-2 align-items-center">
+    <input type="text" name="q" value="{{ q }}" placeholder="🔍 Cari judul resep..."
+           class="filter-input" style="flex:1;min-width:180px">
+    <select name="cat" class="filter-input" style="min-width:150px">
+      <option value="">Semua Kategori</option>
+      {% for c in categories %}
+      <option value="{{ c }}" {% if c == cat %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit"
+            style="background:var(--accent);color:#fff;border:none;border-radius:8px;
+                   padding:8px 18px;font-weight:700;cursor:pointer;font-size:.88rem">
+      Filter
+    </button>
+    {% if q or cat %}
+    <a href="{{ url_for('admin.dashboard') }}"
+       style="color:var(--text-muted);font-size:.83rem;text-decoration:none">Reset</a>
+    {% endif %}
+  </form>
+
+  <div style="color:var(--text-muted);font-size:.82rem;margin-bottom:8px">
+    Menampilkan {{ rows|length }} dari {{ total }} resep
+  </div>
+
+  <!-- Tabel resep -->
+  <div class="section-card p-0 mb-3" style="overflow:hidden">
+    <div class="table-responsive">
+      <table class="adm-table">
+        <thead>
+          <tr>
+            <th>#ID</th>
+            <th>Judul</th>
+            <th>Kategori</th>
+            <th>❤️</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+          <tr>
+            <td style="color:var(--text-muted);width:55px">{{ r.id }}</td>
+            <td>
+              <a href="{{ url_for('recipe.recipe', recipe_id=r.id) }}" target="_blank"
+                 style="color:var(--text-primary);text-decoration:none;font-weight:600">
+                {{ r.title }}
+              </a>
+            </td>
+            <td>
+              <span style="background:var(--surface-2);padding:2px 10px;
+                           border-radius:20px;font-size:.78rem;font-weight:700">
+                {{ r.category }}
+              </span>
+            </td>
+            <td style="color:var(--text-muted);width:60px">{{ r.loves }}</td>
+            <td style="width:130px">
+              <div class="d-flex gap-1">
+                <a href="{{ url_for('admin.edit_recipe', recipe_id=r.id, back_q=q, back_cat=cat, back_page=page) }}"
+                   class="btn-adm btn-edit"
+                   onclick="this.style.opacity=.5;this.style.pointerEvents='none';this.innerHTML='<i class=\'bi bi-arrow-repeat\'></i> ...'">
+                  <i class="bi bi-pencil-fill"></i> Edit
+                </a>
+                <form method="POST"
+                      action="{{ url_for('admin.delete_recipe', recipe_id=r.id) }}"
+                      style="display:inline"
+                      onsubmit="if(!confirm('Hapus resep ini? Tidak bisa dikembalikan.')){return false;}
+                                this.querySelector('button').disabled=true;
+                                this.querySelector('button').innerHTML='<i class=\'bi bi-arrow-repeat\'></i>';
+                                return true;">
+                  <input type="hidden" name="back_q" value="{{ q }}">
+                  <input type="hidden" name="back_cat" value="{{ cat }}">
+                  <input type="hidden" name="back_page" value="{{ page }}">
+                  <button type="submit" class="btn-adm btn-del">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Paginasi -->
+  {% if pages > 1 %}
+  <div class="d-flex gap-2 flex-wrap">
+    {% if page > 1 %}
+    <a href="?q={{ q }}&cat={{ cat }}&page={{ page-1 }}" class="pg-btn">‹ Prev</a>
+    {% endif %}
+    {% for p in range([1, page-2]|max, [pages+1, page+3]|min) %}
+    <a href="?q={{ q }}&cat={{ cat }}&page={{ p }}"
+       class="pg-btn {% if p==page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+    {% if page < pages %}
+    <a href="?q={{ q }}&cat={{ cat }}&page={{ page+1 }}" class="pg-btn">Next ›</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
