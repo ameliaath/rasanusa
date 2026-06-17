@@ -58,6 +58,19 @@ function initNavScroll() {
   }, { passive: true });
 }
 
+// ── Navbar mobile menu fix ───────────────────────────────────────────────
+// Fallback untuk :has() di Safari versi lama: tambah/hapus class 'menu-open'
+// di #mainNav setiap kali menu mobile dibuka/ditutup, supaya backdrop-filter
+// dimatikan dan background jadi solid (mencegah bug rendering "ngambang"
+// pada kombinasi position:sticky + backdrop-filter di Safari iOS).
+function initNavCollapseFix() {
+  const nav        = document.getElementById('mainNav');
+  const navMenu    = document.getElementById('navMenu');
+  if (!nav || !navMenu) return;
+  navMenu.addEventListener('show.bs.collapse', () => nav.classList.add('menu-open'));
+  navMenu.addEventListener('hide.bs.collapse', () => nav.classList.remove('menu-open'));
+}
+
 // ── Page animation ────────────────────────────────────────────────────────
 function initPageAnimation() {
   document.querySelector('main')?.classList.add('page-enter');
@@ -407,6 +420,7 @@ function initIngredientHighlight() {
 document.addEventListener('DOMContentLoaded', () => {
   ThemeManager.init();
   initNavScroll();
+  initNavCollapseFix();
   initPageAnimation();
   SearchManager.init();
   initFavoriteBtn();

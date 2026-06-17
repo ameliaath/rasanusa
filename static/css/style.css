@@ -77,6 +77,18 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* Safari iOS punya bug rendering kalau position:sticky + backdrop-filter
+   berubah tinggi (saat menu mobile dibuka kontennya jadi lebih tinggi) —
+   matikan blur sementara saat menu terbuka, ganti background solid biasa.
+   Class .menu-open ditambah lewat JS (main.js) sebagai fallback untuk
+   browser yang belum dukung :has() (Safari < 15.6). */
+#mainNav:has(.navbar-collapse.show),
+#mainNav.menu-open {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--bg-primary);
+}
+
 .navbar-brand {
   display: flex; align-items: center; gap: 10px;
   text-decoration: none;
@@ -114,6 +126,35 @@ body {
 .nav-link:hover, .nav-link.active {
   color: var(--accent-deep) !important;
   background: var(--accent-soft);
+}
+
+/* Menu mobile (saat navbar di-collapse) — beri background SOLID OPAQUE
+   (bukan rgba transparan) + stacking context sendiri, supaya tidak kena
+   bug rendering Safari iOS pada kombinasi position:sticky + backdrop-filter
+   (collapse menu terlihat "ngambang"/tembus pandang menimpa konten) */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    position: relative;
+    isolation: isolate;
+    background: var(--bg-primary);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-top: 10px;
+    padding: 10px 12px;
+    box-shadow: var(--shadow);
+  }
+  .navbar-nav {
+    width: 100%;
+  }
+  .navbar-nav .nav-item {
+    width: 100%;
+  }
+  .navbar-nav .nav-link {
+    width: 100%;
+    display: block;
+  }
 }
 
 .fav-badge {
