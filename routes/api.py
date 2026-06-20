@@ -262,7 +262,7 @@ def export_pdf(recipe_id):
             Spacer(1, 0.4*cm),
             HRFlowable(width='100%', thickness=1, color=LPINK),
             Paragraph(
-                f'Diekspor dari RasaNusa — {datetime.now().strftime("%d %B %Y")}  |  User: {current_user.username}',
+                f'Diekspor dari ResepLoka — {datetime.now().strftime("%d %B %Y")}  |  User: {current_user.username}',
                 foot_s
             ),
         ]
