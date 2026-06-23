@@ -120,6 +120,11 @@
       .adm-toggle-btn { display: inline-flex; align-items: center; }
       .adm-overlay.show { display: block; }
     }
+
+    /* Cegah pull-to-refresh di mobile yang membuat tampilan admin header "menarik" */
+    html, body {
+      overscroll-behavior-y: none;
+    }
   </style>
   {% block extra_head %}{% endblock %}
 </head>

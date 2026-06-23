@@ -62,7 +62,7 @@
   <div class="container">
     <nav aria-label="breadcrumb" class="mb-3">
       <ol class="breadcrumb" style="font-size:0.85rem">
-        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}" style="color:var(--accent-deep)">🏠 Beranda</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}" style="color:var(--accent-deep)"><span style="vertical-align:middle;font-size:.9em;line-height:1">🏠</span> Beranda</a></li>
         <li class="breadcrumb-item"><a href="{{ url_for('main.category', cat_name=recipe.category) }}" style="color:var(--accent-deep)">{{ recipe.category | capitalize }}</a></li>
         <li class="breadcrumb-item active" style="color:var(--text-muted)">{{ recipe.title[:40] }}...</li>
       </ol>
@@ -113,7 +113,7 @@
             <button id="servInc" class="serv-btn">+</button>
             <span style="font-size:.85rem;color:var(--text-muted)">orang</span>
           </div>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;margin-top:4px">
             <button id="applyTakaran" class="btn-apply-takaran">
               <i class="bi bi-sliders"></i> Sesuaikan Takaran
             </button>
