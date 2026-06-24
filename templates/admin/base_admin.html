@@ -2,7 +2,7 @@
 <html lang="id" data-theme="auto">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>{% block title %}Admin Panel – ResepLoka{% endblock %}</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -121,9 +121,16 @@
       .adm-overlay.show { display: block; }
     }
 
-    /* Cegah pull-to-refresh di mobile yang membuat tampilan admin header "menarik" */
-    html, body {
-      overscroll-behavior-y: none;
+    /* Pastikan topbar admin tetap solid saat pull-to-refresh di mobile
+       (tidak ikut tertarik/melar saat di-swipe ke bawah) */
+    .adm-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      isolation: isolate;
+      background: var(--surface) !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
   </style>
   {% block extra_head %}{% endblock %}

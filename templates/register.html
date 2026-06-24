@@ -33,7 +33,7 @@
 .auth-input {
   flex: 1; border: none; outline: none; padding: 10px 12px;
   background: var(--surface-2); color: var(--text-primary);
-  font-size: .95rem; font-family: inherit;
+  font-size: 16px; font-family: inherit;
 }
 .auth-input::placeholder { color: var(--text-muted); }
 .auth-btn {
@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="container d-flex justify-content-center align-items-center" style="min-height:80vh">
+<section class="container d-flex justify-content-center align-items-start" style="min-height:80vh;padding-top:clamp(24px, 6vh, 80px);padding-bottom:40px">
   <div class="auth-card">
     <div class="auth-header">
       <div style="font-size:3rem">🍜</div>
@@ -76,7 +76,7 @@
           <label class="auth-label">Username</label>
           <div class="auth-input-group">
             <span class="auth-input-prefix"><i class="bi bi-person-fill"></i></span>
-            <input type="text" name="username" class="auth-input" placeholder="Min. 3 karakter" required autofocus minlength="3">
+            <input type="text" name="username" class="auth-input" placeholder="Min. 3 karakter" required minlength="3">
           </div>
         </div>
         <div class="mb-3">
