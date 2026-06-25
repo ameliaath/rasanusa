@@ -62,7 +62,7 @@
   <div class="container">
     <nav aria-label="breadcrumb" class="mb-3">
       <ol class="breadcrumb" style="font-size:0.85rem">
-        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}" style="color:var(--accent-deep)"><span style="vertical-align:middle;font-size:.9em;line-height:1">🏠</span> Beranda</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}" style="color:var(--accent-deep);display:inline-flex;align-items:center;gap:4px;vertical-align:middle"><span style="font-size:1em;line-height:1;display:inline-block;transform:translateY(0)">🏠</span><span>Beranda</span></a></li>
         <li class="breadcrumb-item"><a href="{{ url_for('main.category', cat_name=recipe.category) }}" style="color:var(--accent-deep)">{{ recipe.category | capitalize }}</a></li>
         <li class="breadcrumb-item active" style="color:var(--text-muted)">{{ recipe.title[:40] }}...</li>
       </ol>
