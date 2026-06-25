@@ -252,7 +252,7 @@ body {
   border-radius: 50px;
   background: var(--bg-card);
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 16px;
   font-family: 'Nunito', sans-serif;
   font-weight: 500;
   outline: none;
@@ -669,7 +669,7 @@ mark.bahan-highlight {
   background: none;
   color: var(--text-primary);
   font-family: 'Nunito', sans-serif;
-  font-size: 0.95rem;
+  font-size: 16px;
   outline: none;
 }
 
@@ -880,7 +880,7 @@ mark.bahan-highlight {
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .hero-title { font-size: 1.8rem; }
-  .search-box { font-size: 0.9rem; }
+  .search-box { font-size: 16px; }
   .cat-card-img { height: 140px; }
 }
 
