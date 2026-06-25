@@ -912,6 +912,9 @@ mark.bahan-highlight {
   background:transparent; color:var(--accent); font-size:1.1rem; font-weight:800;
   cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
   transition:all .2s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 .serv-btn:hover { background:var(--accent); color:#fff; }
 .btn-apply-takaran {
@@ -939,3 +942,22 @@ mark.bahan-highlight {
 .flavor-badge.sweet  { background:#fef3c7; color:#d97706; }
 .flavor-badge.savory { background:#f0fdf4; color:#059669; }
 .flavor-badge.sour   { background:#eff6ff; color:#2563eb; }
+
+/* ── Cegah double-tap zoom di semua tombol interaktif (mobile) ──
+   touch-action:manipulation memberitahu browser agar tidak menunggu
+   kemungkinan double-tap dan langsung proses tap sebagai klik biasa */
+button,
+.btn-add-note,
+.btn-apply-takaran,
+.btn-reset-takaran,
+.btn-atur-rasa,
+.serv-btn,
+.star-btn,
+.hint-tag,
+.sort-btn,
+.pg-btn,
+.auth-btn,
+.search-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
