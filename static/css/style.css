@@ -732,7 +732,7 @@ mark.bahan-highlight {
 }
 
 .btn-add-note {
-  padding: 10px 18px;
+  padding: 10px 16px;
   background: linear-gradient(135deg, var(--accent-deep), var(--accent));
   color: #fff;
   border: none;
@@ -741,11 +741,22 @@ mark.bahan-highlight {
   cursor: pointer;
   transition: all 0.25s ease;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-add-note:hover {
   opacity: 0.88;
   transform: scale(1.03);
+}
+
+@media (max-width: 400px) {
+  .btn-add-note {
+    padding: 10px 12px;
+    font-size: 0.88rem;
+  }
+  .note-input-row {
+    gap: 6px;
+  }
 }
 
 .note-item {
